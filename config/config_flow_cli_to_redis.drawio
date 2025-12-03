@@ -1,0 +1,178 @@
+<mxfile host="65bd71144e">
+    <diagram name="Config Flow from CLI to Redis" id="config-flow">
+        <mxGraphModel dx="1298" dy="828" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="2000" pageHeight="2000" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                <mxCell id="title" value="SONiC Configuration Flow: CLI → Redis (ConfigDB)" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=24;fontStyle=1" parent="1" vertex="1">
+                    <mxGeometry x="400" y="20" width="1200" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="layer1_title" value="第1层: 用户接口层" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=14;fontStyle=1" parent="1" vertex="1">
+                    <mxGeometry x="80" y="100" width="1840" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="cli" value="CLI (config 命令)&lt;br&gt;例: config interface ip add" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" parent="1" vertex="1">
+                    <mxGeometry x="200" y="180" width="200" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="rest_api" value="REST API&lt;br&gt;(SONiC Management Framework)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" parent="1" vertex="1">
+                    <mxGeometry x="480" y="180" width="200" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="gnmi" value="gNMI&lt;br&gt;(Telemetry)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" parent="1" vertex="1">
+                    <mxGeometry x="760" y="180" width="200" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="netconf" value="NETCONF&lt;br&gt;(Network Configuration)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" parent="1" vertex="1">
+                    <mxGeometry x="1040" y="180" width="200" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="config_file" value="配置文件&lt;br&gt;config load/reload" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" parent="1" vertex="1">
+                    <mxGeometry x="1320" y="180" width="200" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="gcu" value="Generic Config Updater&lt;br&gt;(JSON Patch)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" parent="1" vertex="1">
+                    <mxGeometry x="1600" y="180" width="200" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="layer2_title" value="第2层: 命令处理层 (Click Framework)" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=14;fontStyle=1" parent="1" vertex="1">
+                    <mxGeometry x="80" y="320" width="1840" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="click_parse" value="Click 命令解析&lt;br&gt;@click.command()&lt;br&gt;@click.option()" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" parent="1" vertex="1">
+                    <mxGeometry x="150" y="400" width="300" height="100" as="geometry"/>
+                </mxCell>
+                <mxCell id="param_validate" value="参数验证&lt;br&gt;- 接口名称验证&lt;br&gt;- IP 地址验证&lt;br&gt;- 范围检查" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" parent="1" vertex="1">
+                    <mxGeometry x="600" y="400" width="300" height="100" as="geometry"/>
+                </mxCell>
+                <mxCell id="ctx_obj" value="Context 对象&lt;br&gt;ctx.obj[&#39;config_db&#39;]&lt;br&gt;ctx.obj[&#39;db&#39;]" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" parent="1" vertex="1">
+                    <mxGeometry x="1000" y="400" width="300" height="100" as="geometry"/>
+                </mxCell>
+                <mxCell id="business_logic" value="业务逻辑处理&lt;br&gt;- 依赖检查&lt;br&gt;- 冲突检测&lt;br&gt;- 前置条件验证" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" parent="1" vertex="1">
+                    <mxGeometry x="1400" y="400" width="300" height="100" as="geometry"/>
+                </mxCell>
+                <mxCell id="layer3_title" value="第3层: 验证层 (YANG Validation)" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=14;fontStyle=1" parent="1" vertex="1">
+                    <mxGeometry x="80" y="560" width="1840" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="yang_check" value="YANG 验证开关检查&lt;br&gt;device_info.is_yang_config_validation_enabled()" style="rhombus;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" parent="1" vertex="1">
+                    <mxGeometry x="400" y="640" width="300" height="120" as="geometry"/>
+                </mxCell>
+                <mxCell id="validated_connector" value="ValidatedConfigDBConnector&lt;br&gt;- validated_set_entry()&lt;br&gt;- validated_mod_entry()&lt;br&gt;- validated_delete_table()" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" parent="1" vertex="1">
+                    <mxGeometry x="900" y="640" width="300" height="120" as="geometry"/>
+                </mxCell>
+                <mxCell id="direct_connector" value="ConfigDBConnector&lt;br&gt;(直接写入，跳过验证)" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;" parent="1" vertex="1">
+                    <mxGeometry x="130" y="640" width="150" height="120" as="geometry"/>
+                </mxCell>
+                <mxCell id="gcu_path" value="Generic Config Updater&lt;br&gt;- apply_patch()&lt;br&gt;- YANG 验证&lt;br&gt;- 补丁排序" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" parent="1" vertex="1">
+                    <mxGeometry x="1300" y="640" width="300" height="120" as="geometry"/>
+                </mxCell>
+                <mxCell id="layer4_title" value="第4层: YANG 处理层" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=14;fontStyle=1" parent="1" vertex="1">
+                    <mxGeometry x="80" y="820" width="1840" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="sonic_yang" value="SonicYang&lt;br&gt;sonic-yang-mgmt" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;" parent="1" vertex="1">
+                    <mxGeometry x="300" y="900" width="200" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="load_model" value="加载 YANG 模型&lt;br&gt;loadYangModel()" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;" parent="1" vertex="1">
+                    <mxGeometry x="600" y="900" width="200" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="convert_format" value="格式转换&lt;br&gt;ConfigDB ? YANG JSON" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;" parent="1" vertex="1">
+                    <mxGeometry x="900" y="900" width="200" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="validate_data" value="数据验证&lt;br&gt;validate_data_tree()" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;" parent="1" vertex="1">
+                    <mxGeometry x="1200" y="900" width="200" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="check_deps" value="依赖检查&lt;br&gt;find_data_dependencies()" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;" parent="1" vertex="1">
+                    <mxGeometry x="1500" y="900" width="200" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="layer5_title" value="第5层: 数据库连接层 (swsscommon)" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=14;fontStyle=1" parent="1" vertex="1">
+                    <mxGeometry x="80" y="1040" width="1840" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="configdb_connector" value="ConfigDBConnector&lt;br&gt;(swsscommon)" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;" parent="1" vertex="1">
+                    <mxGeometry x="400" y="1120" width="300" height="100" as="geometry"/>
+                </mxCell>
+                <mxCell id="set_entry" value="set_entry(table, key, data)&lt;br&gt;写入单个配置项" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;" parent="1" vertex="1">
+                    <mxGeometry x="200" y="1280" width="250" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="mod_entry" value="mod_entry(table, key, data)&lt;br&gt;修改配置项" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;" parent="1" vertex="1">
+                    <mxGeometry x="500" y="1280" width="250" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="delete_table" value="delete_table(table)&lt;br&gt;删除整个表" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;" parent="1" vertex="1">
+                    <mxGeometry x="800" y="1280" width="250" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="pipe_connector" value="ConfigDBPipeConnector&lt;br&gt;(批量操作)" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;" parent="1" vertex="1">
+                    <mxGeometry x="1100" y="1280" width="250" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="layer6_title" value="第6层: Redis 协议层" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontSize=14;fontStyle=1" parent="1" vertex="1">
+                    <mxGeometry x="80" y="1420" width="1840" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="redis_cmd" value="Redis 命令&lt;br&gt;HSET, HDEL, DEL, etc." style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;" parent="1" vertex="1">
+                    <mxGeometry x="300" y="1500" width="300" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="unix_socket" value="Unix Socket&lt;br&gt;/var/run/redis/redis.sock" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;" parent="1" vertex="1">
+                    <mxGeometry x="700" y="1500" width="300" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="tcp_socket" value="TCP Socket&lt;br&gt;localhost:6379" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;" parent="1" vertex="1">
+                    <mxGeometry x="1100" y="1500" width="300" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="layer7_title" value="第7层: Redis 数据库" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=14;fontStyle=1" parent="1" vertex="1">
+                    <mxGeometry x="80" y="1640" width="1840" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="redis_db" value="Redis Server&lt;br&gt;(CONFIG_DB)" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=16;fontStyle=1" parent="1" vertex="1">
+                    <mxGeometry x="600" y="1720" width="800" height="100" as="geometry"/>
+                </mxCell>
+                <mxCell id="db_structure" value="数据结构:&lt;br&gt;Hash: TABLE_NAME|KEY → {field: value}&lt;br&gt;例: PORT|Ethernet0 → {admin_status: up, mtu: 9100}" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;align=left;" parent="1" vertex="1">
+                    <mxGeometry x="200" y="1860" width="600" height="100" as="geometry"/>
+                </mxCell>
+                <mxCell id="pub_sub" value="Pub/Sub 通知&lt;br&gt;Channel: CONFIG_DB_CHANNEL&lt;br&gt;通知订阅者配置变更" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;align=left;" parent="1" vertex="1">
+                    <mxGeometry x="900" y="1860" width="500" height="100" as="geometry"/>
+                </mxCell>
+                <mxCell id="arrow1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=classic;strokeWidth=2;" parent="1" source="cli" target="click_parse" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="arrow2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=classic;strokeWidth=2;" parent="1" source="business_logic" target="yang_check" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <Array as="points">
+                            <mxPoint x="1550" y="530"/>
+                            <mxPoint x="550" y="530"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="arrow3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=classic;strokeWidth=2;" parent="1" source="yang_check" target="validated_connector" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="arrow3_label" value="YANG 验证启用" style="edgeLabel;html=1;align=center;verticalAlign=middle;" parent="arrow3" vertex="1" connectable="0">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="arrow4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=classic;strokeWidth=2;dashed=1;" parent="1" source="yang_check" target="direct_connector" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="arrow4_label" value="YANG 验证禁用" style="edgeLabel;html=1;align=center;verticalAlign=middle;" parent="arrow4" vertex="1" connectable="0">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="arrow5" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=classic;strokeWidth=2;" parent="1" source="validated_connector" target="sonic_yang" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <Array as="points">
+                            <mxPoint x="1050" y="780"/>
+                            <mxPoint x="400" y="780"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="arrow6" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=classic;strokeWidth=2;" parent="1" source="validate_data" target="configdb_connector" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <Array as="points">
+                            <mxPoint x="1300" y="1010"/>
+                            <mxPoint x="550" y="1010"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="arrow7" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=classic;strokeWidth=2;" parent="1" source="set_entry" target="redis_cmd" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="arrow8" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=classic;strokeWidth=2;" parent="1" source="unix_socket" target="redis_db" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="note1" value="示例命令:&lt;br&gt;config interface ip add Ethernet0 10.0.0.1/24" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;dashed=1;align=left;" parent="1" vertex="1">
+                    <mxGeometry x="80" y="180" width="80" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="note2" value="验证流程:&lt;br&gt;1. 加载 YANG 模型&lt;br&gt;2. 转换格式&lt;br&gt;3. 验证数据&lt;br&gt;4. 检查依赖" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;dashed=1;align=left;" parent="1" vertex="1">
+                    <mxGeometry x="1750" y="900" width="150" height="120" as="geometry"/>
+                </mxCell>
+                <mxCell id="note3" value="订阅者:&lt;br&gt;? orchagent&lt;br&gt;? syncd&lt;br&gt;? bgpd&lt;br&gt;? teamd&lt;br&gt;? lldpd" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;dashed=1;align=left;" parent="1" vertex="1">
+                    <mxGeometry x="1500" y="1860" width="120" height="100" as="geometry"/>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+</mxfile>
